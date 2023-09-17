@@ -42,8 +42,8 @@ public class ExcelReportGenerator {
         this.amazonS3Client = amazonS3;
     }
 
-    public void buildXlsxReport(Map<String, String> inputCsvFilesAndSheetNames, String s3BasePath, String destinationFileName) {
-        String destinationXlsxFilePath = s3BasePath + destinationFileName + XLSX_EXTENSION;
+    public void buildXlsxReport(Map<String, String> inputCsvFilesAndSheetNames, String xlsxFileBasePath, String destinationFileName) {
+        String destinationXlsxFilePath = xlsxFileBasePath + destinationFileName + XLSX_EXTENSION;
         LOGGER.info("Building xlsx file started for- {}, ", inputCsvFilesAndSheetNames);
         long xlsxReportBuildStartTime = System.currentTimeMillis();
         try (SXSSFWorkbook workBook = new SXSSFWorkbook(DEFAULT_ROW_ACCESS_WINDOW_SIZE_OF_SXSSFWORKBOOK)) {
