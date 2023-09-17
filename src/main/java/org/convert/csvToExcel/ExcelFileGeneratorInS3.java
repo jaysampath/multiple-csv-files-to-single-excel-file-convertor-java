@@ -24,9 +24,9 @@ import java.time.LocalTime;
 import java.util.Map;
 
 
-public class ExcelReportGenerator {
+public class ExcelFileGeneratorInS3 {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ExcelReportGenerator.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ExcelFileGeneratorInS3.class);
     public static final char DEFAULT_CSV_FILE_DELIMITER = ',';
     public static final String XLSX_EXTENSION = ".xlsx";
     public static final String XLSX_FILE_FORMAT_CONTENT_TYPE =
@@ -38,7 +38,7 @@ public class ExcelReportGenerator {
     public static final String TEMP_FILE_SUFFIX = "";
     private final AmazonS3 amazonS3Client;
 
-    public ExcelReportGenerator(AmazonS3 amazonS3) {
+    public ExcelFileGeneratorInS3(AmazonS3 amazonS3) {
         this.amazonS3Client = amazonS3;
     }
 
@@ -48,13 +48,13 @@ public class ExcelReportGenerator {
         long xlsxReportBuildStartTime = System.currentTimeMillis();
         try (SXSSFWorkbook workBook = new SXSSFWorkbook(DEFAULT_ROW_ACCESS_WINDOW_SIZE_OF_SXSSFWORKBOOK)) {
             for (Map.Entry<String, String> entry : inputCsvFilesAndSheetNames.entrySet()) {
-                String queryName = entry.getKey();
+                String sheetName = entry.getKey();
                 String reportFilePath = entry.getValue();
                 if (StringUtils.isNotEmpty(reportFilePath)) {
-                    readSingleCsvFileAndAddToWorkbook(workBook, queryName, reportFilePath);
+                    readSingleCsvFileAndAddToWorkbook(workBook, sheetName, reportFilePath);
                 } else {
                     //Add blank sheet to workbook
-                    workBook.createSheet(queryName);
+                    workBook.createSheet(sheetName);
                 }
             }
             writeWorkbookToDestinationFileInS3(workBook, destinationXlsxFilePath);

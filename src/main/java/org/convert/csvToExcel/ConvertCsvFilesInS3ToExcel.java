@@ -21,7 +21,7 @@ public class ConvertCsvFilesInS3ToExcel {
                 .withCredentials(new AWSStaticCredentialsProvider(awsCreds))
                 .build();
 
-        ExcelReportGenerator excelReportGenerator = new ExcelReportGenerator(amazonS3);
+        ExcelFileGeneratorInS3 excelReportGenerator = new ExcelFileGeneratorInS3(amazonS3);
 
         Map<String, String> inputCsvFilesAndSheetNames = new LinkedHashMap<>();
         inputCsvFilesAndSheetNames.put("sheet1", sourceCsvFilesS3Prefix + "/" + "test1.csv");
