@@ -43,7 +43,7 @@ public class ExcelFileGeneratorInS3 {
     }
 
     public void buildXlsxReport(Map<String, String> inputCsvFilesAndSheetNames, String xlsxFileBasePath, String destinationFileName) {
-        String destinationXlsxFilePath = xlsxFileBasePath + destinationFileName + XLSX_EXTENSION;
+        String destinationXlsxFilePath = xlsxFileBasePath + "/" + destinationFileName + XLSX_EXTENSION;
         LOGGER.info("Building xlsx file started for- {}, ", inputCsvFilesAndSheetNames);
         long xlsxReportBuildStartTime = System.currentTimeMillis();
         try (SXSSFWorkbook workBook = new SXSSFWorkbook(DEFAULT_ROW_ACCESS_WINDOW_SIZE_OF_SXSSFWORKBOOK)) {
